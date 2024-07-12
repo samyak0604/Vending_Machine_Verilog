@@ -1,0 +1,24 @@
+module tflipflop_tb;
+reg T,CLK,RESET;
+wire Q;
+
+initial 
+$monitor($time," T=%b, CLK=%b, RESET=%b, Q=%b",T,CLK,RESET,Q);
+
+always #5 CLK = ~CLK;
+
+tflipflop dut(.t(T), .clk(CLK), .reset(RESET), .q(Q));
+
+initial 
+begin 
+   RESET = 1'b0; CLK =1'b0;
+   #5  RESET = 1'b0; 
+   #5  RESET = 1'b1; T = 1'b0;
+   #5  T = 1'b1;
+   #10 T = 1'b0;
+   #10 T = 1'b1;
+   #15 T = 1'b0;
+   #5  $finish;
+end
+endmodule
+   

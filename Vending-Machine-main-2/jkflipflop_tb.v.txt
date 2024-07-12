@@ -1,0 +1,27 @@
+module jkflipflop_tb;
+ reg J,K,CLK;
+ wire Q;
+
+initial 
+begin 
+$monitor($time, " J = %b, K = %b, CLK = %b, Q = %b",J,K,CLK,Q);
+$dumpfile ("jkflipflop.vcd");
+$dumpvars(0,jkflipflop_tb);
+end
+
+always #5 CLK = ~CLK;
+ 
+jkflipflop dut (.j(J), .k(K), .clk(CLK), .q(Q));
+
+initial 
+  begin  
+J<=1'b0; K<=1'b1; CLK = 1'b0; 
+   #5 J<=1'b0; K<=1'b0;
+   #5 J<=1'b0; K<=1'b1;
+   #5 J<=1'b1; K<=1'b0;
+   #5 J<=1'b1; K<=1'b1;
+   #10 $finish;
+  end
+endmodule
+
+

@@ -1,0 +1,64 @@
+module vending_machine(input clk, input rst, input [1:0] in, output reg [1:0] change, output reg out);
+
+reg [1:0] cstate,nstate;
+parameter s0 = 2'b00;
+parameter s1 = 2'b01;
+parameter s2 = 2'b10;
+
+always @(posedge clk)
+begin
+ if(rst == 1)
+  begin
+  cstate = s0;
+  nstate = s0;
+  change = 2'b00;
+  end
+else
+ 
+cstate = nstate;
+ 
+case(cstate)
+  
+s0:
+            if(in == 2'b00)
+              begin
+                nstate = s0; change = 2'b00;out=0;
+              end 
+        else if(in == 2'b01)
+              begin
+                nstate = s1; change = 2'b00;out=0;
+              end 
+        else if(in == 2'b10)
+              begin
+                nstate = s2; change = 2'b00;out=0;
+              end 
+
+s1:
+            if(in == 2'b00)
+              begin
+                nstate = s0; change = 2'b01;out=0;
+              end 
+        else if(in == 2'b01)
+              begin
+                nstate = s2; change = 2'b00;out=0;
+              end 
+        else if(in == 2'b10)
+              begin
+                nstate = s0; change = 2'b00;out=1;
+              end 
+s2  :
+            if(in == 2'b00)
+              begin
+                nstate = s0; change = 2'b10;out=0;
+              end 
+        else if(in == 2'b01)
+              begin
+                nstate = s0; change = 2'b00;out=1;
+              end 
+        else if(in == 2'b10)
+              begin
+                nstate = s0; change = 2'b01;out=1;
+              end 
+endcase
+end
+endmodule

@@ -1,0 +1,8 @@
+module fa(input a, input b, input c, output s, output cy);
+reg s,cy;
+always @(a,b,c)
+begin
+ s = a^b^c;
+ cy=(c&(a^b))|(a&b);
+end
+endmodule

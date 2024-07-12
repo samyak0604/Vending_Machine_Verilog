@@ -1,0 +1,18 @@
+module ripple_tb;
+reg [3:0] a,b;
+reg c;
+wire cy;
+wire [3:0] sum;
+initial
+begin
+  $monitor($time, " A=%b, B=%b, C=%b, SUM=%b, Cy=%b", a,b,c,sum,cy);
+end
+ripple DUT(.A(a), .B(b), .C(c), .SUM(sum), .Cy(cy));
+initial
+begin
+#15 a[0]=1'b1; b[0]=1'b0; c=1'b0;
+#25 a[1]=1'b0; b[1]=1'b1; c=1'b0;
+#35 a[2]=1'b1; b[2]=1'b1; c=1'b0;
+#45 a[3]=1'b0; b[3]=1'b1; c=1'b0;
+end
+endmodule
